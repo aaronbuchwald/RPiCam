@@ -9,7 +9,7 @@ class GPIO {
     int bus_enable;
     int config;
     int width, height;
-    int iic_register = (0x00);
+    int iic_register;
     public:
         GPIO (int, int);
         void write(int, int);
@@ -20,6 +20,7 @@ class GPIO {
 
 // constructor to initialize address and the bus to enable
 GPIO:: GPIO( int addr, int bus) {
+    iic_register = (0x00);
     address = addr;
     bus_enable = bus;
     config = bus_enable;
@@ -31,11 +32,11 @@ void write(int _register, int data) {
     int result = wiringPiI2CWrite(_register, data);
 }
 
-int read_byte() {
-    return wiringPiI2CRead(this.address);
+int GPIO::read_byte(int address) {
+    return wiringPiI2CRead(address);
 }
 
-void write_control_register(config) {
+void write_control_register(int iic_register, int config) {
     write(iic_register, config);
 }
 
