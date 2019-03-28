@@ -1,6 +1,7 @@
 // class
 
 #include <iostream>
+#include <wiringPiI2C.h>
 using namespace std;
 
 class GPIO {
