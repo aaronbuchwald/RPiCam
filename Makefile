@@ -6,6 +6,6 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 main.cpp: GPIO.cpp $(INCLUDE)
-	$(CC) $(CFLAGS) main.cpp
+	$(CC) $(CFLAGS) main.cpp -lwiringPi
 clean:
 	rm -f *.o $(TARGET)
