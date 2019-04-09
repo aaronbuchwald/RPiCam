@@ -11,7 +11,7 @@ int iic_bus3 = (0x08);
 IIC::IIC(int iic_addr, int bus_enable) {
     iic_address = iic_addr;
     int config = bus_enable;
-    // write(iic_register, config)
+    write(iic_register, config);
 }
 
 void IIC::write(int rgstr, int data) {
@@ -25,6 +25,10 @@ void IIC::write_control_register(int config) {
 int IIC::read() {
     // return wiringPiI2CRead(address);
     return iic_register;
+}
+
+int IIC::read_control_register() {
+    return read();
 }
 
 int main() {

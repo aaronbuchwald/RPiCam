@@ -1,6 +1,9 @@
 #ifndef _IIC_H
 #define _IIC_H
 
+// #include <wiringPi.h>
+// #include <wiringPiI2C.h>
+
 class IIC {
     public:
         IIC(int iic_addr, int bus_enable);
