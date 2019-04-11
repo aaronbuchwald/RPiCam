@@ -9,17 +9,17 @@ int main() {
     return init_output;
 }
 
-int init() {
+void init() {
     wiringPiI2CSetup(1);
     int fd = wiringPiI2CSetup((0x70));
-    int output = wiringPiI2CWriteReg8(fd, (0x00), (0x01));
+    int ouput = wiringPiI2CWriteReg8(fd, (0x00), (0x01));
 }
 
-int init1() {
+void init1() {
     wiringPiI2CSetup(1);
     IIC iviic = IIC((0x70), (0x01));
 }
 
 int change_camera(int cam) {
-
+    return 1;
 }
