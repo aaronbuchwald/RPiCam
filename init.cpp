@@ -11,7 +11,7 @@ int f2Pin = 12;
 // must restart the RPi after initializing for the RPiCam to work
 void init() {
     wiringPiI2CSetup(1);
-    IIC iviic = IIC((0x70), (0x01));
+    IIC((0x70), (0x01));
 }
 
 void setup_pins() {
@@ -36,10 +36,11 @@ int set_camera(int cam) {
     } else {
         // throw error
     }
+    return 0;
 }
 
 
 int main() {
-    return init();
+    init();
 }
 
