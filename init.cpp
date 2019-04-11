@@ -3,14 +3,10 @@
 #include <wiringPiI2C.h>
 
 
-int main() {
-    init();
-}
-
-void init() {
+int init() {
     wiringPiI2CSetup(1);
     int fd = wiringPiI2CSetup((0x70));
-    int ouput = wiringPiI2CWriteReg8(fd, (0x00), (0x01));
+    return wiringPiI2CWriteReg8(fd, (0x00), (0x01));
 }
 
 void init1() {
@@ -21,3 +17,9 @@ void init1() {
 int change_camera(int cam) {
     return 1;
 }
+
+
+int main() {
+    return init();
+}
+
