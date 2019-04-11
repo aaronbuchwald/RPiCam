@@ -4,12 +4,12 @@ CCFLAGS = -Wall -g
 
 
 init: init.o IIC.o
-	$(CC) $(CCFLAGS) -o init init.o IIC.o
+	$(CC) $(CCFLAGS) -o init init.o IIC.o -lwiringPi
 
 init.o: init.cpp IIC.h
-	$(CC) $(CCFLAGS) -c init.cpp
+	$(CC) $(CCFLAGS) -c init.cpp -lwiringPi
 
-IIC.o: IIC.h #-lwiringPi
+IIC.o: IIC.h -lwiringPi
 
 # OBJS = $(SRC:.c=.o)
 # TARGET = output

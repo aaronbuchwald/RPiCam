@@ -16,7 +16,7 @@ IIC::IIC(int iic_addr, int bus_enable) {
     int output = wiringPiI2CWriteReg8(iic_address, (0x00), bus_enable);
 }
 
-void IIC::write(int rgstr, int data) {
+void IIC::write(int _register, int data) {
     wiringPiI2CWriteReg8(iic_address, _register, data);
 }
 
