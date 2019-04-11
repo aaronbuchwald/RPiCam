@@ -1,6 +1,9 @@
 #include "IIC.h"
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+#include <iostream>
+
+using namespace std;
 
 
 int ePin = 7;
@@ -39,8 +42,17 @@ int set_camera(int cam) {
     return 0;
 }
 
+void read_pins() {
+    cout << digitalRead(7) << endl;
+    cout << digitalRead(11) << endl;
+    cout << digitalRead(12) << endl;
+}
 
 int main() {
     init();
+    wiringPiSetupGpio();
+    read_pins();
+    set_camera(1);
+    read_pins();
 }
 
