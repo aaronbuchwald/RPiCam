@@ -4,9 +4,7 @@
 
 
 int main() {
-    int init_output = init();
-
-    return init_output;
+    init();
 }
 
 void init() {
