@@ -25,22 +25,40 @@ void setup_pins() {
 
 int set_camera(int cam) {
     if (cam == 1) {
-        digitalWrite(7, 0);
-        digitalWrite(11, 0);
-        digitalWrite(12, 1);
+        digitalWrite(7, LOW);
+        digitalWrite(11, LOW);
+        digitalWrite(12, HIGH);
     } else if (cam == 2) {
-        digitalWrite(7, 0);
-        digitalWrite(11, 1);
-        digitalWrite(12, 1);   
+        digitalWrite(7, LOW);
+        digitalWrite(11, HIGH);
+        digitalWrite(12, HIGH);   
     } else if (cam == 3) {
-        digitalWrite(7, 1);
-        digitalWrite(11, 0);
-        digitalWrite(12, 0);
+        digitalWrite(7, HIGH);
+        digitalWrite(11, LOW);
+        digitalWrite(12, LOW);
     } else {
-        // throw error
+        return -1;
     }
     return 0;
 }
+
+string capture(string name) {
+    set_camera(cam);
+    system("raspistill -o " << name);
+    return name;
+}
+
+int capture_sequence(int a, int b, int c) {
+    string end = ".jpg";
+    set_camera(a);
+    capture(a << end);
+    set_camera(b);
+    capture(b << end);
+    set_camera(c);
+    capture(c << end);
+}
+
+
 
 void read_pins() {
     cout << digitalRead(7) << endl;
