@@ -2,6 +2,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -28,34 +29,40 @@ int set_camera(int cam) {
         digitalWrite(7, LOW);
         digitalWrite(11, LOW);
         digitalWrite(12, HIGH);
+
     } else if (cam == 2) {
         digitalWrite(7, LOW);
         digitalWrite(11, HIGH);
-        digitalWrite(12, HIGH);   
+        digitalWrite(12, HIGH);
+
     } else if (cam == 3) {
         digitalWrite(7, HIGH);
         digitalWrite(11, LOW);
         digitalWrite(12, LOW);
+        
     } else {
         return -1;
     }
+
     return 0;
 }
 
 string capture(string name) {
-    set_camera(cam);
-    system("raspistill -o " << name);
+    system("raspistill -o image.jpg");
+
     return name;
 }
 
 int capture_sequence(int a, int b, int c) {
     string end = ".jpg";
     set_camera(a);
-    capture(a << end);
+    capture("");
     set_camera(b);
-    capture(b << end);
+    capture("");
     set_camera(c);
-    capture(c << end);
+    capture("");
+
+    return 0;
 }
 
 
@@ -67,10 +74,12 @@ void read_pins() {
 }
 
 int main() {
-    init();
+    // init();
     wiringPiSetupGpio();
     read_pins();
     set_camera(1);
     read_pins();
+
+    return 0;
 }
 
