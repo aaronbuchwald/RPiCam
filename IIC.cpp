@@ -16,13 +16,18 @@ IIC::IIC(int iic_addr, int bus_enable) {
     int output = wiringPiI2CWriteReg8(iic_address, (0x00), bus_enable);
 }
 
+// write data to the address at given reigster
 void IIC::write(int _register, int data) {
     wiringPiI2CWriteReg8(iic_address, _register, data);
 }
 
+// write to the register (0x00) the data given by config
 void IIC::write_control_register(int config) {
     write(iic_register, config);
 }
+
+// write_byte_data address is the building, the register is the apartment number, and the data is the letter
+// wiringPiI2CWriteReg8()
 
 int IIC::read() {
     return wiringPiI2CRead(iic_address);

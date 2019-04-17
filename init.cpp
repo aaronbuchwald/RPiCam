@@ -39,7 +39,7 @@ int set_camera(int cam) {
         digitalWrite(7, HIGH);
         digitalWrite(11, LOW);
         digitalWrite(12, LOW);
-        
+
     } else {
         return -1;
     }
@@ -74,11 +74,11 @@ void read_pins() {
 }
 
 int main() {
-    // init();
+    init();
     wiringPiSetupGpio();
-    read_pins();
+    setup_pins();
     set_camera(1);
-    read_pins();
+    system("sudo reboot");
 
     return 0;
 }

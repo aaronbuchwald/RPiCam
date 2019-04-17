@@ -11,6 +11,14 @@ init.o: init.cpp IIC.h
 
 IIC.o: IIC.h -lwiringPi
 
+capture_sequence: capture_sequence.o camera.o
+	$(CC) $(CCFLAGS) -o init init.o IIC.o -lwiringPi
+
+capture_sequence.o: capture_sequence.h camera.h -lwiringPi
+	$(CC) $(CCFLAGS) -c capture_sequence.cpp -lwiringPi
+
+camera.o: camera.h -lwiringPi
+
 # OBJS = $(SRC:.c=.o)
 # TARGET = output
 # all: $(TARGET)
