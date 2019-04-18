@@ -1,9 +1,8 @@
 #include "camera.h"
-#include <string.h>
 
 
 IIC iviic = IIC((0x70), (0x01));
-cout << "Starting..." << endl;
+std::cout << "Starting..." << endl;
 
 // wiringPi abstracts the physical pin numbers
 // pin number counterparts documented here: https://hackage.haskell.org/package/wiringPi
@@ -40,7 +39,7 @@ int set_camera(int cam) {
         // iviic.write_control_register((0x08));
         // assign GPIO pins
 
-        cout << "No cam 4";
+        std::cout << "No cam 4";
         return -1;
     } else {
         return -1;
