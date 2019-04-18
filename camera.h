@@ -8,6 +8,6 @@
 #include <string>
 
 int set_camera(int cam);
-string capture(string name);
+std::string capture(std::string name);
 
 #endif
