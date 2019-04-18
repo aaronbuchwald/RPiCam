@@ -1,6 +1,8 @@
+#include <string.h>
+#include <string>
 #include "IIC.h"
 #include "camera.h"
-#include <string.h>
+
 
 int capture_sequence(std::string n1, std::string n2, std::string n3) {
     set_camera(1);
@@ -15,4 +17,6 @@ int capture_sequence(std::string n1, std::string n2, std::string n3) {
 
 int main() {
     capture_sequence("one", "two", "three");
+
+    return 0;
 }
