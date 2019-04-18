@@ -1,4 +1,6 @@
-#include "capture_sequence.h"
+#include "IIC.h"
+#include "camera.h"
+#include <string.h>
 
 int capture_sequence(std::string n1, std::string n2, std::string n3) {
     set_camera(1);

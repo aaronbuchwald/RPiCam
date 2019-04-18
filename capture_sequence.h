@@ -1,6 +1,7 @@
 #ifndef _CAPTURE_SEQUENCE_H
 #define _CAPTURE_SEQUENCE_H
 
+#include "IIC.h"
 #include "camera.h"
 #include <string.h>
 

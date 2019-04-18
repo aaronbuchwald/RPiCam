@@ -8,7 +8,13 @@
 #include <iostream>
 #include <string.h>
 
-int set_camera(int cam);
-std::string capture(std::string name);
+class camera {
+    public:
+        int set_camera(int);
+        std::string capture(std::string name);
+    private:
+        IIC iviic;
+        int PIN7, PIN11, PIN12;
+};
 
 #endif
