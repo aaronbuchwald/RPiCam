@@ -1,7 +1,6 @@
 #include "camera.h"
 #include <string.h>
 
-using namespace std;
 
 IIC iviic = IIC((0x70), (0x01));
 cout << "Starting..." << endl;
@@ -52,8 +51,8 @@ int set_camera(int cam) {
 
 
 // takes picture and gives it the name of the argument with .jpg appended
-string capture(string name) {
-    string = name + ".jpg";
+std::string capture(std::string name) {
+    std::string = name + ".jpg";
     system("raspistill -o " + full_name);
 
     return full_name;
