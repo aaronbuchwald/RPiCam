@@ -4,6 +4,7 @@
 #include "IIC.h"
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+#include <stdlib.h>
 #include <iostream>
 #include <string.h>
 
