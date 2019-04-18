@@ -1,4 +1,5 @@
-#include <"camera.h">
+#include "camera.h"
+#include <string.h>
 
 using namespace std;
 
@@ -52,7 +53,7 @@ int set_camera(int cam) {
 
 // takes picture and gives it the name of the argument with .jpg appended
 string capture(string name) {
-    string full_name = name + ".jpg";
+    string = name + ".jpg";
     system("raspistill -o " + full_name);
 
     return full_name;

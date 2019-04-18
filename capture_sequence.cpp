@@ -1,8 +1,8 @@
-#include <"camera.h">
+#include "camera.h"
 
+using namespace std;
 
-int capture_sequence(string n1, string n2, string n3) {
-    string end = ".jpg";
+int capture_sequence(char* n1, char* n2, char* n3) {
     set_camera(1);
     capture(n1);
     set_camera(2);
