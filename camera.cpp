@@ -69,3 +69,5 @@ std::string camera::capture(std::string name) {
 
 
 
+
+

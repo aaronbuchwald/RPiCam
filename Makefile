@@ -2,7 +2,7 @@ CC = g++
 SRC = GPIO.cpp
 CCFLAGS = -Wall -g
 
-all: init capture_sequence
+all: init camera
 
 init: init.o IIC.o
 	$(CC) $(CCFLAGS) -o init init.o IIC.o -lwiringPi
@@ -12,11 +12,13 @@ init.o: init.cpp IIC.h
 
 IIC.o: IIC.h -lwiringPi
 
-capture_sequence: capture_sequence.o camera.o
-	$(CC) $(CCFLAGS) -o init init.o IIC.o -lwiringPi
+# capture_sequence: capture_sequence.o camera.o
+# 	$(CC) $(CCFLAGS) -o init init.o IIC.o -lwiringPi
 
-capture_sequence.o: capture_sequence.cpp camera.h
-	$(CC) $(CCFLAGS) -c capture_sequence.cpp -lwiringPi
+# capture_sequence.o: capture_sequence.cpp camera.h
+# 	$(CC) $(CCFLAGS) -c capture_sequence.cpp -lwiringPi
+
+camera: camera.o -lwiringPi
 
 camera.o: camera.h -lwiringPi
 
