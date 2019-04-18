@@ -67,7 +67,9 @@ std::string camera::capture(std::string name) {
     return full_name;
 }
 
-
+int main() {
+    return 0;
+}
 
 
 
