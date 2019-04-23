@@ -70,7 +70,10 @@ std::string camera::capture(std::string name) {
 
     // convert string to char* for system command
     char cmd_char[command.size() + 1];
-    strcopy(cmd_char, command.c_str());
+    // strcopy(cmd_char, command.c_str());
+    for (int i = 0 ; i < command.size() ; i++) {
+        cmd_char[i] = command.at(i);
+    }
 
     system(cmd_char);
 
