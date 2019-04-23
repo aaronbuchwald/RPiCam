@@ -80,7 +80,7 @@ std::string camera::capture(std::string name) {
 }
 
 int main() {
-    camera cam();
+    camera cam;
 
     cam.set_camera(1);
     cam.capture("test");
