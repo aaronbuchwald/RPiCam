@@ -2,7 +2,7 @@ CC = g++
 SRC = GPIO.cpp
 CCFLAGS = -Wall -g
 
-all: init camera
+all: init camera test
 
 init: init.o IIC.o
 	$(CC) $(CCFLAGS) -o init init.o IIC.o -lwiringPi
@@ -21,6 +21,14 @@ IIC.o: IIC.h -lwiringPi
 camera: camera.o -lwiringPi
 
 camera.o: camera.h -lwiringPi
+
+test: test.o camera1.o
+
+test.o: test.cpp camera1.h
+	$(CC) $(CCFLAGS) -c test.cpp -lwiringPi
+
+camera1.o camera1.h -lwiringPi
+
 
 # OBJS = $(SRC:.c=.o)
 # TARGET = output
