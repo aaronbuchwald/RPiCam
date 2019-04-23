@@ -70,7 +70,6 @@ std::string camera::capture(std::string name) {
 
     // convert string to char* for system command
     char cmd_char[command.size() + 1];
-    // strcopy(cmd_char, command.c_str());
     for (int i = 0 ; i < command.size() ; i++) {
         cmd_char[i] = command.at(i);
     }
@@ -81,7 +80,10 @@ std::string camera::capture(std::string name) {
 }
 
 int main() {
-    return 0;
+    camera cam();
+
+    cam.set_camera(1);
+    cam.capture("test");
 }
 
 
