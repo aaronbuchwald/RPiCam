@@ -61,16 +61,16 @@ int camera::set_camera(int cam) {
 
 // takes picture and gives it the name of the argument with .jpg appended
 std::string camera::capture(std::string name) {
-    std::string full_name = name + ".jpg";
-    int n = full_name.length();
-    char char_arr[n+1];
+    std::string end (".jpg");
+    std::string command ("raspistill -o ");
+    std::string command_plus_argument;
+    std::string image_name;
+    image_name = name + end;
+    command_plus_argument = command + image_name;
 
-    strcopy(char_arr, full_name.c_str());
+    system(command_plus_argument);
 
-
-    system("raspistill -o " + char_arr);
-
-    return full_name;
+    return image_name;
 }
 
 int main() {
