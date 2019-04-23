@@ -97,8 +97,11 @@ std::string camera::capture(std::string name) {
 int main() {
     camera cam;
 
-    cam.set_camera(1);
-    cam.capture("test");
+    cam.set_camera(2);
+    cam.capture("test2");
+
+    cam.set_camera(3);
+    cam.capture("test3");
 }
 
 
