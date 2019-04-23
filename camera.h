@@ -8,6 +8,7 @@
 #include "IIC.h"
 #include <stdlib.h>
 #include <iostream>
+#include <cstring>
 
 
 class camera {
