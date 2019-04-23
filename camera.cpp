@@ -20,6 +20,12 @@ camera::camera() {
 // return cam number changed to on success
 // returns -1 for an illegal argument
 int camera::set_camera(int cam) {
+    // sets the pins to output mode
+    pinMode(7, OUTPUT);
+    pinMode(11, OUTPUT);
+    pinMode(12, OUTPUT);
+
+
     PIN7 = 7;
     PIN11 = 0;
     PIN12 = 1;
