@@ -20,6 +20,10 @@ camera::camera() {
 // return cam number changed to on success
 // returns -1 for an illegal argument
 int camera::set_camera(int cam) {
+
+    // sets up wiringPi must be called before using pins
+    wiringPiSetup();
+    
     // sets the pins to output mode
     pinMode(7, OUTPUT);
     pinMode(11, OUTPUT);
