@@ -55,6 +55,9 @@ int camera::set_camera(int cam) {
         return -1;
     }
 
+    std::cout << digitalRead(PIN7) << endl;
+    std::cout << digitalRead(PIN11) << endl;
+    std::cout << digitalRead(PIN12) << endl;
     return cam;
 }
 
