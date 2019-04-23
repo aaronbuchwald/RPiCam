@@ -24,15 +24,17 @@ int camera::set_camera(int cam) {
     // sets up wiringPi must be called before using pins
     wiringPiSetup();
     
-    // sets the pins to output mode
-    pinMode(7, OUTPUT);
-    pinMode(11, OUTPUT);
-    pinMode(12, OUTPUT);
-
-
+    // makes sure to initialize these correctly as the wiringPi versions of the physical numbers
     PIN7 = 7;
     PIN11 = 0;
     PIN12 = 1;
+
+
+    // sets the pins to output mode
+    pinMode(PIN7, OUTPUT);
+    pinMode(PIN11, OUTPUT);
+    pinMode(PIN12, OUTPUT);
+
     if (cam == 1) {
         wiringPiI2CWriteReg8((0x70), (0x00), (0x01));
         // iviic.write_control_register((0x01));
