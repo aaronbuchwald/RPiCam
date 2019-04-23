@@ -23,6 +23,7 @@ camera: camera.o -lwiringPi
 camera.o: camera.h -lwiringPi
 
 test: test.o camera1.o
+	$(CC) $(CCFLAGS) -c test test.o camera1.o
 
 test.o: test.cpp camera1.h
 	$(CC) $(CCFLAGS) -c test.cpp -lwiringPi

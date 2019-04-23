@@ -16,8 +16,3 @@ int set_camera(int cam_num) {
 std::string capture(std::string name) {
     return name;
 }
-
-
-int main() {
-    return 0;
-}
