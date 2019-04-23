@@ -65,8 +65,10 @@ std::string camera::capture(std::string name) {
     int n = full_name.length();
     char char_arr[n+1];
 
+    strcopy(char_arr, full_name.c_str());
 
-    system("raspistill -o " + full_name);
+
+    system("raspistill -o " + char_arr);
 
     return full_name;
 }

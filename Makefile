@@ -26,9 +26,9 @@ test: test.o camera1.o
 	$(CC) $(CCFLAGS) -c test test.o camera1.o
 
 test.o: test.cpp camera1.h
-	$(CC) $(CCFLAGS) -c test.cpp -lwiringPi
+	$(CC) $(CCFLAGS) -c test.cpp
 
-camera1.o camera1.h -lwiringPi
+camera1.o: camera1.h # -lwiringPi
 
 
 # OBJS = $(SRC:.c=.o)
