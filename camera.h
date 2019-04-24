@@ -10,6 +10,7 @@
 #include <iostream>
 #include <cstring>
 
+// add in the extra functions to camera for the capture sequence
 
 class camera {
     public:

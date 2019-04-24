@@ -45,16 +45,25 @@ int camera::set_camera(int cam) {
     } else if (cam == 2) {
         // iviic.write_control_register((0x02));
         wiringPiI2CWriteReg8((0x70), (0x00), (0x02));
-        digitalWrite(PIN7, LOW);
-        digitalWrite(PIN11, HIGH);
-        digitalWrite(PIN12, HIGH);
+        // digitalWrite(PIN7, LOW); // HIGH
+        // digitalWrite(PIN11, HIGH); // LOW
+        // digitalWrite(PIN12, HIGH); // HIGH
+
+        digitalWrite(PIN7, HIGH); // HIGH
+        digitalWrite(PIN11, LOW); // LOW
+        digitalWrite(PIN12, HIGH); // HIGH
 
     } else if (cam == 3) {
         // iviic.write_control_register((0x04));
         wiringPiI2CWriteReg8((0x70), (0x00), (0x04));
-        digitalWrite(PIN7, HIGH);
-        digitalWrite(PIN11, LOW);
-        digitalWrite(PIN12, LOW);
+        // digitalWrite(PIN7, HIGH); // HIGH
+        // digitalWrite(PIN11, LOW); // HIGH
+        // digitalWrite(PIN12, LOW); // LOW
+
+
+        digitalWrite(PIN7, HIGH); // HIGH
+        digitalWrite(PIN11, HIGH); // HIGH
+        digitalWrite(PIN12, LOW); // LOW
 
     } else if (cam == 4) {
         // iviic.write_control_register((0x08));
@@ -94,8 +103,53 @@ std::string camera::capture(std::string name) {
     return image_name;
 }
 
+std::string num_as_string(int num) {
+    if (num == 1) {
+        return "1";
+    } else if (num == 2) {
+        return "2";
+    } else if (num == 3) {
+        return "3";
+    } else if (num == 4) {
+        return "4";
+    } else if (num == 5) {
+        return "5";
+    } else if (num == 6) {
+        return "6";
+    } else {
+        return "INVALID_NUMBER";
+    }
+}
+
+// takes pictures with camera 1-3 and naming them cam[cam number]_[iteration].jpg
+int capture_sequence() {
+    // creates camera object
+    camera cam;
+
+    // loops through the necessary 6 times to take pictures for OpNav
+    for (int i = 1; i <= 6; i++) {
+
+        // creates string from the variable i as a naming mechanism for the images taken
+        std::string num_str;
+        num_str = num_as_string(i);
+
+        // captures the images for the ith iteration in the sequence
+        cam.set_camera(1);
+        cam.capture("cam1_" + num_str);
+
+        cam.set_camera(2);
+        cam.capture("cam2_" + num_str);
+
+        cam.set_camera(3);
+        cam.capture("cam3_" + num_str);
+    }
+}
+
 int main() {
     camera cam;
+
+    cam.set_camera(1);
+    cam.capture("test1");
 
     cam.set_camera(2);
     cam.capture("test2");
