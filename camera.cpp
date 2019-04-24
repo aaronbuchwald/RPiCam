@@ -88,9 +88,10 @@ std::string camera::capture(std::string name) {
     std::string end (".jpg");
     std::string cmd ("raspistill -o ");
     std::string command;
+    std::string options (" -ex sports --nopreview --timeout 0")
     std::string image_name;
     image_name = name + end;
-    command = cmd + image_name;
+    command = cmd + image_name + options;
 
     // convert string to char* for system command
     char cmd_char[command.size() + 1];
