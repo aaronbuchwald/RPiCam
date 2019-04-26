@@ -9,18 +9,7 @@ camera::camera() {
     // wiringPi abstracts the physical pin numbers
     // pin number counterparts documented here: https://hackage.haskell.org/package/wiringPi
     // Assign the wiringPi pin numbers to the variables named for their physical pin numbering
-
-    PIN7 = 7;
-    PIN11 = 0;
-    PIN12 = 1;
-}
-
-// writes data to the register at (0x70) and sets wiringPi pins to designate the correct camera
-// camera 4 is available on multiplexer but not implemented here
-// return cam number changed to on success
-// returns -1 for an illegal argument
-int camera::set_camera(int cam) {
-
+    
     // sets up wiringPi must be called before using pins
     wiringPiSetup();
     
@@ -35,6 +24,16 @@ int camera::set_camera(int cam) {
     pinMode(PIN11, OUTPUT);
     pinMode(PIN12, OUTPUT);
 
+    PIN7 = 7;
+    PIN11 = 0;
+    PIN12 = 1;
+}
+
+// writes data to the register at (0x70) and sets wiringPi pins to designate the correct camera
+// camera 4 is available on multiplexer but not implemented here
+// return cam number changed to on success
+// returns -1 for an illegal argument
+int camera::set_camera(int cam) {
     if (cam == 1) {
         wiringPiI2CWriteReg8((0x70), (0x00), (0x01));
         // iviic.write_control_register((0x01));
@@ -61,18 +60,20 @@ int camera::set_camera(int cam) {
         // digitalWrite(PIN12, LOW); // LOW
 
 
-        digitalWrite(PIN7, HIGH); // HIGH
+        digitalWrite(PIN7, LOW); // HIGH
         digitalWrite(PIN11, HIGH); // HIGH
         digitalWrite(PIN12, LOW); // LOW
 
     } else if (cam == 4) {
-        // iviic.write_control_register((0x08));
-        // wiringPiI2CWriteReg8((0x70), (0x00), (0x08));
-        // assign GPIO pins
-
-        std::cout << "No cam 4";
-        return -1;
+        iviic.write_control_register((0x08));
+        wiringPiI2CWriteReg8((0x70), (0x00), (0x08));
+        
+        digitalWrite(PIN7, HIGH);
+        digitalWrite(PIN11, HIGH);
+        digitalWrite(PIN12, LOW);
     } else {
+        std::cout << "Invalid camera option passed: must be in (1,2,3,4)" << std::endl;
+
         return -1;
     }
 
@@ -147,6 +148,8 @@ int capture_sequence() {
 }
 
 int main() {
+
+    // need to initialize I2C first before usage, this should all be done in the constructor of the camera object
     camera cam;
 
     cam.set_camera(1);
