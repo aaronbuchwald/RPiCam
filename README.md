@@ -38,6 +38,8 @@ Physical GPIO pins 7, 11, and 12 are manipulated to select from the four camera 
 
 # Usage
 
+Must be initialized first. In order for the initalization to take effect, the RPi must reboot, so running ./init will reboot the RPi. Using init() does not reboot the computer, and it must still be restarted. Every time the RPi shuts down, you will need to reinitialize and reboot again. This is very unfortunate, but it seems to be a problem with the Multiplexer, and we could not make it work with the python code unless the RPi was restarted either. I'm unsure of the reason why, and it would be a huge improvement if this could be fixed. This was another big problem during development,
+
 ./init
 
 #include <init.h>
@@ -49,6 +51,12 @@ init();
 Include the camera file:
 #include <camera.h>
 
+Three functions, set_camera(int) to select one of the four cameras to feed through the multiplexer, capture(string) to capture a picture and name it based off the argument, and capture_sequence() to take pictures with each camera in succession (used by CisLunar Explorers Optical Navigation system).
+
 capture_sequnce()
+
+set_camera()
+
+capture()
 
 
