@@ -4,8 +4,10 @@ Drivers for RPi Cameras with Multiplexer
 # Installation and Setup
 
 First, make sure that the Raspberry Pi is up to date by running the two commands:
-$ sudo apt-get update</br>
-$ sudo apt-get upgrade</br>
+
+$ sudo apt-get update
+
+$ sudo apt-get upgrade
 
 RPiCam depends on I2C and Camera to be enabled on the Raspberry Pi. You can set this up in two ways:
 
