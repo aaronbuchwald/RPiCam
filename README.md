@@ -21,18 +21,21 @@ With RPi GUI:
 From the command line:
 
 $ raspi-config
+
 Ensure that i2c and camera are enabled.
 
 Next, refer to the installation instructions for the wiringPi library to ensure that your system has it installed correctly: http://wiringpi.com/download-and-install/
 
-It should come pre-installed, but errors often occur and you may have to delete and reinstall the package.
+It should come pre-installed, but it will usually cause errors and you will probably have to reinstall it according to the directions from the above link.
 
 
 # Notes
 
 RPiCam is derived from the open source python library released by the manufacturer of the multiplexer here: https://github.com/ivmech/ivport-v2.
 
-It is poorly documented and there are two iterations, which can be difficult to understand and difficult to translate into C++ with the wiringPi library. One of the problems I ran into was that it refers to different GPIO pins in different places (in the code and in examples) about which must be manipulated to select cameras.
+Old version has more helpful material in some cases: documentation is here: https://github.com/ivmech/ivport/blob/master/docs/ivport_manual.pdf
+
+It is poorly documented and there are two iterations with different material, which can be difficult to understand and difficult to translate into C++ with the wiringPi library. One of the problems I ran into was that it refers to different GPIO pins in different places (in the code and in examples) about which must be manipulated to select cameras.
 
 Physical GPIO pins 7, 11, and 12 are manipulated to select from the four camera inputs on the multiplexer. Because the ivport-v2 github was poorly documented, I've redone it here and have found that this is the correct way to select cameras for the Multiplexer V2.
 
