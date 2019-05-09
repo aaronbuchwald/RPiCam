@@ -101,7 +101,7 @@ std::string camera::capture(std::string name) {
     std::string options (" -ex sports --nopreview --timeout 0");
     std::string image_name;
     image_name = name + end;
-    command = cmd + image_name + options;
+    command = cmd + image_name; // + options;
 
     // convert string to char* for system command
     char cmd_char[command.size() + 1];
