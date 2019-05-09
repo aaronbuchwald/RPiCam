@@ -34,6 +34,15 @@ camera::camera() {
 // return cam number changed to on success
 // returns -1 for an illegal argument
 int camera::set_camera(int cam) {
+    pinMode(PIN7, OUTPUT);
+    pinMode(PIN11, OUTPUT);
+    pinMode(PIN12, OUTPUT);
+
+    PIN7 = 7;
+    PIN11 = 0;
+    PIN12 = 1;
+
+
     if (cam == 1) {
         wiringPiI2CWriteReg8((0x70), (0x00), (0x01));
         // iviic.write_control_register((0x01));
