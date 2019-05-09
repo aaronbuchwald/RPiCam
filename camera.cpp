@@ -65,7 +65,7 @@ int camera::set_camera(int cam) {
         digitalWrite(PIN12, LOW); // LOW
 
     } else if (cam == 4) {
-        iviic.write_control_register((0x08));
+        // iviic.write_control_register((0x08));
         wiringPiI2CWriteReg8((0x70), (0x00), (0x08));
         
         digitalWrite(PIN7, HIGH);
@@ -89,7 +89,7 @@ std::string camera::capture(std::string name) {
     std::string end (".jpg");
     std::string cmd ("raspistill -o ");
     std::string command;
-    std::string options (" -ex sports --nopreview --timeout 0")
+    std::string options (" -ex sports --nopreview --timeout 0");
     std::string image_name;
     image_name = name + end;
     command = cmd + image_name + options;
