@@ -18,17 +18,11 @@ IIC.o: IIC.h -lwiringPi
 # capture_sequence.o: capture_sequence.cpp camera.h
 # 	$(CC) $(CCFLAGS) -c capture_sequence.cpp -lwiringPi
 
-camera: camera.o -lwiringPi
 
-camera.o: camera.h IIC.h -lwiringPi
+camera: camera.o IIC.o
+	$(CC) $(CCFLAGS) -o camera camera.o IIC.o -lwiringPi
 
+camera.o: camera.h IIC.h
+	$(CC) $(CCFLAGS) -c camera.cpp -lwiringPi
 
-# OBJS = $(SRC:.c=.o)
-# TARGET = output
-# all: $(TARGET)
-# $(TARGET): $(OBJS)
-# 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
-# main.cpp: GPIO.cpp $(INCLUDE)
-# 	$(CC) $(CFLAGS) main.cpp -lwiringPi
-# clean:
-# 	rm -f *.o $(TARGET)
+IIC.o: IIC.h -lwiringPi
