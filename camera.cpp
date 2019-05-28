@@ -2,9 +2,7 @@
 
 
 camera::camera() {
-    // creates the IIC device to write to later to manipulate multiplexer
-    // iviic = IIC((0x70), (0x01));
-    // std::cout << "Initializing the camera..." << std::endl;
+    std::cout << "Initializing the camera..." << std::endl;
 
     // wiringPi abstracts the physical pin numbers
     // pin number counterparts documented here: https://hackage.haskell.org/package/wiringPi
@@ -12,8 +10,7 @@ camera::camera() {
     
     // sets up wiringPi must be called before using pins
 
-    wiringPiI2CSetup(1);
-    IIC((0x70), (0x01));
+    iviic ((0x70), (0x01));
 
     wiringPiSetup();
     
@@ -39,28 +36,32 @@ int camera::set_camera(int cam) {
 
 
     if (cam == 1) {
-        wiringPiI2CWriteReg8((0x70), (0x00), (0x01));
+        // wiringPiI2CWriteReg8((0x70), (0x00), (0x01));
+        iviic.write_control_register(0x01);
 
         digitalWrite(PIN7, LOW);
         digitalWrite(PIN11, LOW);
         digitalWrite(PIN12, HIGH);
 
     } else if (cam == 2) {
-        wiringPiI2CWriteReg8((0x70), (0x00), (0x02));
+        // wiringPiI2CWriteReg8((0x70), (0x00), (0x02));
+        iviic.write_control_register(0x02;
 
         digitalWrite(PIN7, HIGH);
         digitalWrite(PIN11, LOW);
         digitalWrite(PIN12, HIGH);
 
     } else if (cam == 3) {
-        wiringPiI2CWriteReg8((0x70), (0x00), (0x04));
+        // wiringPiI2CWriteReg8((0x70), (0x00), (0x04));
+        iviic.write_control_register(0x04);
 
         digitalWrite(PIN7, LOW);
         digitalWrite(PIN11, HIGH);
         digitalWrite(PIN12, LOW);
 
     } else if (cam == 4) {
-        wiringPiI2CWriteReg8((0x70), (0x00), (0x08));
+        // wiringPiI2CWriteReg8((0x70), (0x00), (0x08));
+        iviic.write_control_register(0x08);
         
         digitalWrite(PIN7, HIGH);
         digitalWrite(PIN11, HIGH);
@@ -155,6 +156,5 @@ int main() {
     cam.set_camera(4);
     cam.capture("test4");
 }
-
 
 

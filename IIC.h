@@ -3,6 +3,7 @@
 
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+#include <iostream>
 
 class IIC {
     public:
@@ -13,6 +14,7 @@ class IIC {
         void write_control_register(int config);
     private:
         int iic_address, iic_register;
+        int iic_bus0, iic_bus1, iic_bus2, iic_bus3;
 };
 
 #endif

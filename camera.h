@@ -19,6 +19,7 @@ class camera {
         std::string capture(std::string name);
     private:
         int PIN7, PIN11, PIN12;
+        IIC iviic;
 };
 
 #endif
