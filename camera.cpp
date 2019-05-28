@@ -11,6 +11,10 @@ camera::camera() {
     // Assign the wiringPi pin numbers to the variables named for their physical pin numbering
     
     // sets up wiringPi must be called before using pins
+
+    wiringPiI2CSetup(1);
+    IIC((0x70), (0x01));
+
     wiringPiSetup();
     
     // makes sure to initialize these correctly as the wiringPi versions of the physical numbers
@@ -23,14 +27,9 @@ camera::camera() {
     pinMode(PIN7, OUTPUT);
     pinMode(PIN11, OUTPUT);
     pinMode(PIN12, OUTPUT);
-
-    PIN7 = 7;
-    PIN11 = 0;
-    PIN12 = 1;
 }
 
 // writes data to the register at (0x70) and sets wiringPi pins to designate the correct camera
-// camera 4 is available on multiplexer but not implemented here
 // return cam number changed to on success
 // returns -1 for an illegal argument
 int camera::set_camera(int cam) {
@@ -38,43 +37,29 @@ int camera::set_camera(int cam) {
     pinMode(PIN11, OUTPUT);
     pinMode(PIN12, OUTPUT);
 
-    PIN7 = 7;
-    PIN11 = 0;
-    PIN12 = 1;
-
 
     if (cam == 1) {
         wiringPiI2CWriteReg8((0x70), (0x00), (0x01));
-        // iviic.write_control_register((0x01));
+
         digitalWrite(PIN7, LOW);
         digitalWrite(PIN11, LOW);
         digitalWrite(PIN12, HIGH);
 
     } else if (cam == 2) {
-        // iviic.write_control_register((0x02));
         wiringPiI2CWriteReg8((0x70), (0x00), (0x02));
-        // digitalWrite(PIN7, LOW); // HIGH
-        // digitalWrite(PIN11, HIGH); // LOW
-        // digitalWrite(PIN12, HIGH); // HIGH
 
-        digitalWrite(PIN7, HIGH); // HIGH
-        digitalWrite(PIN11, LOW); // LOW
-        digitalWrite(PIN12, HIGH); // HIGH
+        digitalWrite(PIN7, HIGH);
+        digitalWrite(PIN11, LOW);
+        digitalWrite(PIN12, HIGH);
 
     } else if (cam == 3) {
-        // iviic.write_control_register((0x04));
         wiringPiI2CWriteReg8((0x70), (0x00), (0x04));
-        // digitalWrite(PIN7, HIGH); // HIGH
-        // digitalWrite(PIN11, LOW); // HIGH
-        // digitalWrite(PIN12, LOW); // LOW
 
-
-        digitalWrite(PIN7, LOW); // HIGH
-        digitalWrite(PIN11, HIGH); // HIGH
-        digitalWrite(PIN12, LOW); // LOW
+        digitalWrite(PIN7, LOW);
+        digitalWrite(PIN11, HIGH);
+        digitalWrite(PIN12, LOW);
 
     } else if (cam == 4) {
-        // iviic.write_control_register((0x08));
         wiringPiI2CWriteReg8((0x70), (0x00), (0x08));
         
         digitalWrite(PIN7, HIGH);
@@ -86,9 +71,6 @@ int camera::set_camera(int cam) {
         return -1;
     }
 
-    std::cout << digitalRead(PIN7) << std::endl;
-    std::cout << digitalRead(PIN11) << std::endl;
-    std::cout << digitalRead(PIN12) << std::endl;
     return cam;
 }
 
@@ -169,6 +151,9 @@ int main() {
 
     cam.set_camera(3);
     cam.capture("test3");
+
+    cam.set_camera(4);
+    cam.capture("test4");
 }
 
 
