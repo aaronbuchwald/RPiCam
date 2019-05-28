@@ -20,7 +20,7 @@ IIC.o: IIC.h -lwiringPi
 
 camera: camera.o -lwiringPi
 
-camera.o: camera.h -lwiringPi
+camera.o: camera.h IIC.h -lwiringPi
 
 
 # OBJS = $(SRC:.c=.o)
