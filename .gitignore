@@ -1,0 +1,16 @@
+# Executable Files
+
+camera
+
+init
+
+# Object Files
+
+*.o
+
+
+# Pictures
+
+*.jpg
+
+.vscode
