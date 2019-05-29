@@ -10,7 +10,7 @@ camera::camera() {
     
     // sets up wiringPi must be called before using pins
 
-    iviic ((0x70), (0x01));
+    iviic = IIC((0x70), (0x01));
 
     wiringPiSetup();
     
@@ -45,7 +45,7 @@ int camera::set_camera(int cam) {
 
     } else if (cam == 2) {
         // wiringPiI2CWriteReg8((0x70), (0x00), (0x02));
-        iviic.write_control_register(0x02;
+        iviic.write_control_register(0x02);
 
         digitalWrite(PIN7, HIGH);
         digitalWrite(PIN11, LOW);
@@ -79,7 +79,7 @@ int camera::set_camera(int cam) {
 // takes picture and gives it the name of the argument with .jpg appended
 std::string camera::capture(std::string name) {
     std::string end (".jpg");
-    std::string cmd ("raspistill -o ");
+    std::string cmd ("raspistill -t 3 -o ");
     std::string command;
     std::string options (" -ex sports --nopreview --timeout 0");
     std::string image_name;
@@ -137,6 +137,7 @@ int capture_sequence() {
         cam.set_camera(3);
         cam.capture("cam3_" + num_str);
     }
+    return 1;
 }
 
 int main() {

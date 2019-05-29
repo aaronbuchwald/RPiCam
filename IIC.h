@@ -7,6 +7,7 @@
 
 class IIC {
     public:
+	IIC();
         IIC(int iic_addr, int bus_enable);
         void write(int rgstr, int data);
         int read();

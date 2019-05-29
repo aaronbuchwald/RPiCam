@@ -4,6 +4,10 @@ int iic_address = (0x70);
 int iic_register = (0x00);
 
 
+IIC::IIC() {
+    iic_address = wiringPiI2CSetup((0x70));
+    wiringPiI2CWriteReg8(iic_address, (0x00), (0x01));
+}
 
 // initializes I2C address, so it can be written to and read from
 // Precondition: must run wiringPiI2CSetup(1) * on model A+
@@ -19,7 +23,7 @@ IIC::IIC(int iic_addr, int bus_enable) {
 
     std::cout << "iic_address given: " << iic_addr << std::endl;
     iic_address = wiringPiI2CSetup(iic_addr);
-    std::cout << "iic_address: " << std::endl;
+    std::cout << "iic_address: " << iic_address << std::endl;
     int result = wiringPiI2CWriteReg8(iic_address, (0x00), bus_enable);
     std::cout << "result of write operation: " << result << std::endl;
 }

@@ -15,7 +15,6 @@ int f2Pin = 12;
 // initializes the i2c for this device and initializes the camera component
 // must restart the RPi after initializing for the RPiCam to work
 void init() {
-    wiringPiI2CSetup(1);
     IIC((0x70), (0x01));
 }
 
@@ -76,9 +75,6 @@ void read_pins() {
 
 int main() {
     init();
-    wiringPiSetupGpio();
-    setup_pins();
-    set_camera(1);
     system("sudo reboot");
 
     return 0;
