@@ -91,6 +91,7 @@ std::string camera::capture(std::string name) {
     for (int i = 0 ; i < command.size() ; i++) {
         cmd_char[i] = command.at(i);
     }
+    cmd_char[command.size()] = '\0';
 
     system(cmd_char);
 
