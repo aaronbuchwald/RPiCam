@@ -75,7 +75,7 @@ int camera::set_camera(int cam) {
     return cam;
 }
 
-char[] string_to_char(std::string str) {
+char string_to_char(std::string str) {
     char result[str.size() + 1];
     for (unsigned int i = 0; i < str.size() ; i++ ) {
         result[i] = str.at(i);

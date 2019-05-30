@@ -1,6 +1,6 @@
 CC = g++
 SRC = GPIO.cpp
-CCFLAGS = -Wall -g
+CCFLAGS = -Wall -g -std=c++11
 
 all: init camera
 
