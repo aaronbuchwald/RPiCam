@@ -121,9 +121,12 @@ std::string num_as_string(int num) {
 int capture_sequence() {
     // creates camera object
     camera cam;
+    //clock_t t;
+    //t = clock();
+
 
     // loops through the necessary 6 times to take pictures for OpNav
-    for (int i = 1; i <= 6; i++) {
+    for (int i = 1; i <= 2; i++) {
 
         // creates string from the variable i as a naming mechanism for the images taken
         std::string num_str;
@@ -139,25 +142,20 @@ int capture_sequence() {
         cam.set_camera(3);
         cam.capture("cam3_" + num_str);
     }
+
+    //t = clock() - t;
+
+    //int clocks = (int)t;
+    //float seconds = ((float)t/CLOCKS_PER_SEC);
+    //std::cout << CLOCKS_PER_SEC << std::endl;
+    //std::cout << "Clocks: " << clocks << ", Seconds: " << seconds << std::endl;
     return 1;
 }
 
 int main() {
 
     // need to initialize I2C first before usage, this should all be done in the constructor of the camera object
-    camera cam;
-
-    cam.set_camera(1);
-    cam.capture("test1");
-
-    cam.set_camera(2);
-    cam.capture("test2");
-
-    cam.set_camera(3);
-    cam.capture("test3");
-
-    cam.set_camera(4);
-    cam.capture("test4");
+    capture_sequence();
 }
 
 

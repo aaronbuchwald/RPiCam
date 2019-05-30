@@ -21,11 +21,8 @@ IIC::IIC(int iic_addr, int bus_enable) {
     int default_iic_address = iic_address;
     int default_bus_enable = iic_bus0;
 
-    std::cout << "iic_address given: " << iic_addr << std::endl;
     iic_address = wiringPiI2CSetup(iic_addr);
-    std::cout << "iic_address: " << iic_address << std::endl;
     int result = wiringPiI2CWriteReg8(iic_address, (0x00), bus_enable);
-    std::cout << "result of write operation: " << result << std::endl;
 }
 
 // uses the iic_address given to the constructor
