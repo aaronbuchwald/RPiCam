@@ -9,6 +9,9 @@
 #include <stdlib.h>
 #include <iostream>
 #include <cstring>
+#include "Image.h"
+#include <array>
+#include <time.h>
 
 // add in the extra functions to camera for the capture sequence
 

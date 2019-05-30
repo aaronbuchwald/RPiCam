@@ -75,6 +75,17 @@ int camera::set_camera(int cam) {
     return cam;
 }
 
+char[] string_to_char(std::string str) {
+    char result[str.size() + 1];
+    for (unsigned int i = 0; i < str.size() ; i++ ) {
+        result[i] = str.at(i);
+    }
+
+    result[str.size()] = '\0';
+
+    return result;
+}
+
 
 // takes picture and gives it the name of the argument with .jpg appended
 std::string camera::capture(std::string name) {
@@ -87,11 +98,13 @@ std::string camera::capture(std::string name) {
     command = cmd + image_name + options;
 
     // convert string to char* for system command
-    char cmd_char[command.size() + 1];
-    for (unsigned int i = 0 ; i < command.size() ; i++) {
-        cmd_char[i] = command.at(i);
-    }
-    cmd_char[command.size()] = '\0';
+    // char cmd_char[command.size() + 1];
+    // for (unsigned int i = 0 ; i < command.size() ; i++) {
+    //     cmd_char[i] = command.at(i);
+    // }
+    // cmd_char[command.size()] = '\0';
+
+    char cmd_char = string_to_char(command);
     std::cout << cmd_char << std::endl;
 
     system(cmd_char);
@@ -118,9 +131,12 @@ std::string num_as_string(int num) {
 }
 
 // takes pictures with camera 1-3 and naming them cam[cam number]_[iteration].jpg
-int capture_sequence() {
+Image[] capture_sequence() {
     // creates camera object
     camera cam;
+    clock_t current_time;
+
+    current_time = clock();
 
     // loops through the necessary 6 times to take pictures for OpNav
     for (int i = 1; i <= 6; i++) {
