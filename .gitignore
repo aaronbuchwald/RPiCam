@@ -4,6 +4,8 @@ camera
 
 init
 
+*.out
+
 # Object Files
 
 *.o
