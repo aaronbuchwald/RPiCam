@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <cstring>
+#include <chrono>
 
 // add in the extra functions to camera for the capture sequence
 
