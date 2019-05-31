@@ -1,5 +1,6 @@
 #include "camera.h"
 
+using namespace std::chrono;
 
 camera::camera() {
     std::cout << "Initializing the camera..." << std::endl;
@@ -117,8 +118,8 @@ std::string num_as_string(int num) {
     }
 }
 
-double find_time(std::chrono::high_resolution_clock::time_point &t1) {
-    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+double find_time(high_resolution_clock::time_point &t1) {
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
 
     std::chrono::duration<double> time_span = std::chrono::duration_cast<duration<double> >(t2-t1);
     t1 = std::chrono::high_resolution_clock::now();
@@ -132,7 +133,7 @@ int capture_sequence() {
     //clock_t t;
     //t = clock();
 
-    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
     double time_difference = 0.0;
 
     // loops through the necessary 6 times to take pictures for OpNav
