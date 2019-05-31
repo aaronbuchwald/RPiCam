@@ -31,13 +31,8 @@ camera::camera() {
 // return cam number changed to on success
 // returns -1 for an illegal argument
 int camera::set_camera(int cam) {
-    pinMode(PIN7, OUTPUT);
-    pinMode(PIN11, OUTPUT);
-    pinMode(PIN12, OUTPUT);
-
 
     if (cam == 1) {
-        // wiringPiI2CWriteReg8((0x70), (0x00), (0x01));
         iviic.write_control_register(0x01);
 
         digitalWrite(PIN7, LOW);
@@ -45,7 +40,6 @@ int camera::set_camera(int cam) {
         digitalWrite(PIN12, HIGH);
 
     } else if (cam == 2) {
-        // wiringPiI2CWriteReg8((0x70), (0x00), (0x02));
         iviic.write_control_register(0x02);
 
         digitalWrite(PIN7, HIGH);
@@ -53,7 +47,6 @@ int camera::set_camera(int cam) {
         digitalWrite(PIN12, HIGH);
 
     } else if (cam == 3) {
-        // wiringPiI2CWriteReg8((0x70), (0x00), (0x04));
         iviic.write_control_register(0x04);
 
         digitalWrite(PIN7, LOW);
@@ -61,15 +54,12 @@ int camera::set_camera(int cam) {
         digitalWrite(PIN12, LOW);
 
     } else if (cam == 4) {
-        // wiringPiI2CWriteReg8((0x70), (0x00), (0x08));
         iviic.write_control_register(0x08);
         
         digitalWrite(PIN7, HIGH);
         digitalWrite(PIN11, HIGH);
         digitalWrite(PIN12, LOW);
     } else {
-        std::cout << "Invalid camera option passed: must be in (1,2,3,4)" << std::endl;
-
         return -1;
     }
 
@@ -79,13 +69,10 @@ int camera::set_camera(int cam) {
 
 // takes picture and gives it the name of the argument with .jpg appended
 std::string camera::capture(std::string name) {
-    std::string end (".jpg");
-    std::string cmd ("raspistill -t 3 -o ");
-    std::string command;
-    std::string options (" --nopreview");
-    std::string image_name;
-    image_name = name + end;
-    command = cmd + image_name + options;
+    std::string cmd ("raspistill -t 500 -ex sports --nopreview -o ");
+    std::string command;// sport mode (auto is default) -t for timeout set name to - so that it goes to stdout
+    // --quality option to reduce quality (1-100) 75 might be a good number
+    command = cmd + name;
 
     // convert string to char* for system command
     char cmd_char[command.size() + 1];
@@ -93,11 +80,10 @@ std::string camera::capture(std::string name) {
         cmd_char[i] = command.at(i);
     }
     cmd_char[command.size()] = '\0';
-    std::cout << cmd_char << std::endl;
 
     system(cmd_char);
 
-    return image_name;
+    return command;
 }
 
 std::string num_as_string(int num) {
@@ -118,20 +104,19 @@ std::string num_as_string(int num) {
     }
 }
 
+// finds the difference between t1 and the current time and updates the time parameter to now
 double find_time(high_resolution_clock::time_point &t1) {
     high_resolution_clock::time_point t2 = high_resolution_clock::now();
 
-    std::chrono::duration<double> time_span = std::chrono::duration_cast<duration<double> >(t2-t1);
+    double time_span_seconds = std::chrono::duration_cast<duration<double> >(t2-t1).count();
     t1 = std::chrono::high_resolution_clock::now();
-    return time_span.count();
+    return time_span_seconds;
 }
 
 // takes pictures with camera 1-3 and naming them cam[cam number]_[iteration].jpg
 int capture_sequence() {
     // creates camera object
     camera cam;
-    //clock_t t;
-    //t = clock();
 
     high_resolution_clock::time_point t1 = high_resolution_clock::now();
     double time_difference = 0.0;
@@ -145,17 +130,17 @@ int capture_sequence() {
 
         // captures the images for the ith iteration in the sequence
         cam.set_camera(1);
-        cam.capture("cam1_" + num_str);
+        cam.capture("cam1_" + num_str + ".jpg");
         time_difference = find_time(t1);
         std::cout << "Time difference: " << time_difference << std::endl;
 
         cam.set_camera(2);
-        cam.capture("cam2_" + num_str);
+        cam.capture("cam2_" + num_str + ".jpg");
         time_difference = find_time(t1);
         std::cout << "Time difference: " << time_difference << std::endl;
 
         cam.set_camera(3);
-        cam.capture("cam3_" + num_str);
+        cam.capture("cam3_" + num_str + ".jpg");
         time_difference = find_time(t1);
         std::cout << "Time difference: " << time_difference << std::endl;
     }
