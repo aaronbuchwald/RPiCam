@@ -117,6 +117,14 @@ std::string num_as_string(int num) {
     }
 }
 
+double find_time(std::chrono::high_resolution_clock::time_point &t1) {
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double> time_span = std::chrono::duration_cast<duration<double> >(t2-t1);
+    t1 = std::chrono::high_resolution_clock::now();
+    return time_span.count();
+}
+
 // takes pictures with camera 1-3 and naming them cam[cam number]_[iteration].jpg
 int capture_sequence() {
     // creates camera object
@@ -124,6 +132,8 @@ int capture_sequence() {
     //clock_t t;
     //t = clock();
 
+    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+    double time_difference = 0.0;
 
     // loops through the necessary 6 times to take pictures for OpNav
     for (int i = 1; i <= 2; i++) {
@@ -135,12 +145,18 @@ int capture_sequence() {
         // captures the images for the ith iteration in the sequence
         cam.set_camera(1);
         cam.capture("cam1_" + num_str);
+        time_difference = find_time(t1);
+        std::cout << "Time difference: " << time_difference << std::endl;
 
         cam.set_camera(2);
         cam.capture("cam2_" + num_str);
+        time_difference = find_time(t1);
+        std::cout << "Time difference: " << time_difference << std::endl;
 
         cam.set_camera(3);
         cam.capture("cam3_" + num_str);
+        time_difference = find_time(t1);
+        std::cout << "Time difference: " << time_difference << std::endl;
     }
 
     //t = clock() - t;
