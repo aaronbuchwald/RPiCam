@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <fstream>
 
 using namespace std;
 
@@ -53,19 +54,6 @@ string capture(string name) {
     return name;
 }
 
-int capture_sequence(int a, int b, int c) {
-    string end = ".jpg";
-    set_camera(a);
-    capture("");
-    set_camera(b);
-    capture("");
-    set_camera(c);
-    capture("");
-
-    return 0;
-}
-
-
 
 void read_pins() {
     cout << digitalRead(7) << endl;
@@ -74,9 +62,38 @@ void read_pins() {
 }
 
 int main() {
-    system("vcgencmd get_camera");
-    init();
-    system("sudo reboot");
+    system("vcgencmd get_camera > /tmp/get_camera.txt");
+    string line;
+    bool camera_supported = false;
+    bool camera_detected = false;
+    ifstream file ("/tmp/get_camera.txt");
+    if (file.is_open()) {
+	if (getline(file, line) ) {
+	    if (line.at(10) == 1) {
+		camera_supported = true;
+		cout << "Camera is supported." << endl;
+	    } else {
+		cout << "Camera is not currently supported." << endl;
+	    }
+	    if (line.at(21) == 1) {
+		camera_detected = true;
+		cout << "Camera is detected." << endl;
+	    } else {
+		cout << "Camera is not detected." << endl;
+	    }
+	}
+	file.close();
+    } else {
+	cout << "Unable to open the file" << endl;
+    }
+
+
+    if (camera_supported && camera_detected) {
+	cout << "Camera has already been initialized." << endl;
+    } else {
+	init();
+	system("sudo reboot");
+    }
 
     return 0;
 }
