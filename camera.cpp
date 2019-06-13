@@ -69,7 +69,7 @@ int camera::set_camera(int cam) {
 
 // takes picture and gives it the name of the argument with .jpg appended
 std::string camera::capture(std::string name) {
-    std::string cmd ("raspistill -t 500 -ex sports --nopreview -o ");
+    std::string cmd ("raspistill -t 1 -ex sports -q 30 --nopreview -o ");
     std::string command;// sport mode (auto is default) -t for timeout set name to - so that it goes to stdout
     // --quality option to reduce quality (1-100) 75 might be a good number
     command = cmd + name;
@@ -113,6 +113,24 @@ double find_time(high_resolution_clock::time_point &t1) {
     return time_span_seconds;
 }
 
+int test_cameras() {
+    camera cam;
+
+    cam.set_camera(1);
+    cam.capture("cam1.jpg");
+
+    cam.set_camera(2);
+    cam.capture("cam2.jpg");
+
+    cam.set_camera(3);
+    cam.capture("cam3.jpg");
+
+    cam.set_camera(4);
+    cam.capture("cam4.jpg");
+
+    return 0;
+}
+
 // takes pictures with camera 1-3 and naming them cam[cam number]_[iteration].jpg
 int capture_sequence() {
     // creates camera object
@@ -122,7 +140,7 @@ int capture_sequence() {
     double time_difference = 0.0;
 
     // loops through the necessary 6 times to take pictures for OpNav
-    for (int i = 1; i <= 2; i++) {
+    for (int i = 1; i <= 6; i++) {
 
         // creates string from the variable i as a naming mechanism for the images taken
         std::string num_str;
@@ -143,6 +161,11 @@ int capture_sequence() {
         cam.capture("cam3_" + num_str + ".jpg");
         time_difference = find_time(t1);
         std::cout << "Time difference: " << time_difference << std::endl;
+
+	//cam.set_camera(4);
+	//cam.capture("cam4_" + num_str + ".jpg");
+	//time_difference = find_time(t1);
+	//std::cout << "Time difference: " << time_difference <<  std::endl;
     }
 
     //t = clock() - t;
@@ -155,7 +178,7 @@ int capture_sequence() {
 }
 
 int main() {
-
+    //test_cameras();
     // need to initialize I2C first before usage, this should all be done in the constructor of the camera object
     capture_sequence();
 }

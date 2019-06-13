@@ -74,6 +74,7 @@ void read_pins() {
 }
 
 int main() {
+    system("vcgencmd get_camera");
     init();
     system("sudo reboot");
 
