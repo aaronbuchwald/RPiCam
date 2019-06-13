@@ -69,11 +69,11 @@ int camera::set_camera(int cam) {
 
 // takes picture and gives it the name of the argument with .jpg appended
 std::string camera::capture(std::string name) {
-    std::string cmd ("raspistill -t 1 -ex sports -q 30 --nopreview -o ");
-    std::string command;// sport mode (auto is default) -t for timeout set name to - so that it goes to stdout
-    // --quality option to reduce quality (1-100) 75 might be a good number
+    std::string cmd ("raspistill -t 5 -ex sports --nopreview -o ");
+    std::string command;
     command = cmd + name;
 
+    // find correct c++ native function to do this to optimize
     // convert string to char* for system command
     char cmd_char[command.size() + 1];
     for (unsigned int i = 0 ; i < command.size() ; i++) {
