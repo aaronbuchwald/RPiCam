@@ -6,7 +6,15 @@ int iic_register = (0x00);
 
 IIC::IIC() {
     iic_address = wiringPiI2CSetup((0x70));
-    wiringPiI2CWriteReg8(iic_address, (0x00), (0x01));
+    if (iic_address < 0) {
+	throw "IIC Setup failed";
+    }
+    else {
+	int write = wiringPiI2CWriteReg8(iic_address, (0x00), (0x01));
+	if (write < 0) {
+	    throw "Write failed";
+	}
+    }
 }
 
 // initializes I2C address, so it can be written to and read from
@@ -23,17 +31,20 @@ IIC::IIC(int iic_addr, int bus_enable) {
 
     iic_address = wiringPiI2CSetup(iic_addr);
     int result = wiringPiI2CWriteReg8(iic_address, (0x00), bus_enable);
+    if ( !(iic_address >= 0 && result >= 0)) {
+	throw "IIC setup error";
+    }
 }
 
 // uses the iic_address given to the constructor
 // write data to the address at given reigster
-void IIC::write(int _register, int data) {
-    wiringPiI2CWriteReg8(iic_address, _register, data);
+int IIC::write(int _register, int data) {
+    return wiringPiI2CWriteReg8(iic_address, _register, data);
 }
 
 // write to the register (0x00) the data given by config
-void IIC::write_control_register(int config) {
-    write(iic_register, config);
+int IIC::write_control_register(int config) {
+    return write(iic_register, config);
 }
 
 // write_byte_data address is the building, the register is the apartment number, and the data is the letter

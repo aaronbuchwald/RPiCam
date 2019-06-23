@@ -69,13 +69,14 @@ int main() {
     ifstream file ("/tmp/get_camera.txt");
     if (file.is_open()) {
 	if (getline(file, line) ) {
-	    if (line.at(10) == 1) {
+	    cout << line.at(10) << line.at(21) << endl;
+	    if (line.at(10) == '1') {
 		camera_supported = true;
 		cout << "Camera is supported." << endl;
 	    } else {
 		cout << "Camera is not currently supported." << endl;
 	    }
-	    if (line.at(21) == 1) {
+	    if (line.at(21) == '1') {
 		camera_detected = true;
 		cout << "Camera is detected." << endl;
 	    } else {
@@ -92,7 +93,7 @@ int main() {
 	cout << "Camera has already been initialized." << endl;
     } else {
 	init();
-	system("sudo reboot");
+	// system("sudo reboot");
     }
 
     return 0;
