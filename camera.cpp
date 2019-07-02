@@ -1,6 +1,9 @@
 #include "camera.h"
 
-using namespace std::chrono;
+// using namespace std::chrono;
+namespace {
+    volatile std::sig_atomic_t last_success = -1;
+}
 
 camera::camera() {
     std::cout << "Initializing the camera..." << std::endl;
@@ -175,6 +178,45 @@ int capture_sequence() {
     //std::cout << CLOCKS_PER_SEC << std::endl;
     //std::cout << "Clocks: " << clocks << ", Seconds: " << seconds << std::endl;
     return 1;
+}
+
+void sig_timeout_handler(int signal) {
+    std::cout << "Camera timed out, trying again..." << std::endl;
+}
+
+
+std::string camera::set_and_capture(int cam, std::string name) {
+    set_camera(cam);
+    capture(name);
+
+    last_success = 1;
+}
+
+
+int cap_sequence_with_timeout() {
+    // Creates the timeout handler
+    std::signal(SIGUSR1, sig_timeout_handler);
+
+    camera cam;
+
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+    double time_difference = 0.0;
+
+    for (int round = 1; round <= 6 ; round++) {
+        for (int cam = 1; cam <= 3; cam++) {
+            last_success = 0;
+            std::thread thread_capture(&cam.set_and_capture, cam, "dummy");
+            thread_capture.detach();
+            
+            usleep(2000000);
+            if (last_success != 1) {
+                cam -= 1;
+                raise(SIGUSR1);
+            } else {
+                // Pass through as this indicates that the last picture was taken successfully
+            }
+        }
+    }
 }
 
 int main() {

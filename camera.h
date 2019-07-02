@@ -10,7 +10,9 @@
 #include <iostream>
 #include <cstring>
 #include <chrono>
-
+#include <csignal>
+#include <thread>
+#include <unistd.h>
 // add in the extra functions to camera for the capture sequence
 
 class camera {
@@ -18,6 +20,7 @@ class camera {
         camera();
         int set_camera(int);
         std::string capture(std::string name);
+        std::string set_and_capture(int cam, std::string name);
     private:
         int PIN7, PIN11, PIN12;
         IIC iviic;
