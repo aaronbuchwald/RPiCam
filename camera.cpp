@@ -1,9 +1,6 @@
 #include "camera.h"
 
-// using namespace std::chrono;
-namespace {
-    volatile std::sig_atomic_t last_success = -1;
-}
+using namespace std::chrono;
 
 camera::camera() {
     std::cout << "Initializing the camera..." << std::endl;
@@ -108,10 +105,10 @@ std::string num_as_string(int num) {
 }
 
 // finds the difference between t1 and the current time and updates the time parameter to now
-double find_time(std::chrono::high_resolution_clock::time_point &t1) {
-    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+double find_time(high_resolution_clock::time_point &t1) {
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
 
-    double time_span_seconds = std::chrono::duration_cast<std::chrono::duration<double> >(t2-t1).count();
+    double time_span_seconds = std::chrono::duration_cast<duration<double> >(t2-t1).count();
     t1 = std::chrono::high_resolution_clock::now();
     return time_span_seconds;
 }
@@ -139,7 +136,7 @@ int capture_sequence() {
     // creates camera object
     camera cam;
 
-    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
     double time_difference = 0.0;
 
     // loops through the necessary 6 times to take pictures for OpNav
@@ -180,51 +177,8 @@ int capture_sequence() {
     return 1;
 }
 
-void sig_timeout_handler(int signal) {
-    std::cout << "Camera timed out, trying again..." << std::endl;
-}
-
-
-void set_and_capture(camera cam, int camNum, std::string name) {
-    cam.set_camera(camNum);
-    cam.capture(name);
-
-    last_success = 1;
-}
-
-
-void cap_sequence_with_timeout() {
-    // Creates the timeout handler
-    std::signal(SIGUSR1, sig_timeout_handler);
-
-    camera cam;
-
-    // std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-    // double time_difference = 0.0;
-
-    for (int round = 1; round <= 6 ; round++) {
-        for (int camNum = 1; camNum <= 3; camNum++) {
-            last_success = 0;
-            std::thread thread_capture(&set_and_capture, cam, camNum, "dummy");
-            thread_capture.detach();
-            
-            usleep(2000000);
-            if (last_success != 1) {
-                camNum -= 1;
-                raise(SIGUSR1);
-            } else {
-                // Pass through as this indicates that the last picture was taken successfully
-            }
-        }
-    }
-}
-
 int main() {
     //test_cameras();
     // need to initialize I2C first before usage, this should all be done in the constructor of the camera object
     capture_sequence();
-
-    return 1;
 }
-
-
