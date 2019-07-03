@@ -205,7 +205,7 @@ void cap_sequence_with_timeout() {
     for (int round = 1; round <= 6 ; round++) {
         for (int camNum = 1; camNum <= 3; camNum++) {
             last_success = 0;
-            std::thread thread_capture(cam, camNum, "dummy");
+            std::thread thread_capture(&set_and_capture, cam, camNum, "dummy");
             thread_capture.detach();
             
             usleep(2000000);
