@@ -15,6 +15,10 @@ namespace {
     volatile std::sig_atomic_t last_success = -1;
 }
 
+void foo() {
+    // Foo
+}
+
 // writes data to the register at (0x70) and sets wiringPi pins to designate the correct camera
 // return cam number changed to on success
 // returns -1 for an illegal argument
@@ -158,11 +162,11 @@ int setupGPIO() {
 
 void cap_sequence_with_timeout() {
     // Creates the timeout handler
-    std::signal(SIGUSR1, sig_timeout_handler);
+    std::signal(SIGINT, sig_timeout_handler);
 
     int iic_address = setupIIC();
 
-    int gpioSetup = setupGPIO();
+    setupGPIO();
 
     // std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
     // double time_difference = 0.0;
@@ -170,14 +174,20 @@ void cap_sequence_with_timeout() {
     for (int round = 1; round <= 6 ; round++) {
         for (int camNum = 1; camNum <= 3; camNum++) {
             last_success = 0;
-            std::thread thread_capture(&set_and_capture, iic_address, camNum, "dummy");
+            std::thread thread_capture(&set_and_capture, iic_address, camNum, std::to_string(round) + "_" + std::to_string(camNum) + ".jpg");
             thread_capture.detach();
             
             usleep(2000000);
             if (last_success != 1) {
                 camNum -= 1;
-                raise(SIGUSR1);
+		std::cout << "Fail" << std::endl;
+		std::cout << round << std::endl;
+		std::cout << camNum << std::endl;
+                raise(SIGINT);
             } else {
+		std::cout << "Success" << std::endl;
+                std::cout << round << std::endl;
+                std::cout << camNum << std::endl;
                 // Pass through as this indicates that the last picture was taken successfully
             }
         }
@@ -187,7 +197,7 @@ void cap_sequence_with_timeout() {
 int main() {
     //test_cameras();
     // need to initialize I2C first before usage, this should all be done in the constructor of the camera object
-    cap_sequence_with_timeout()
+    cap_sequence_with_timeout();
 
     return 1;
 }
