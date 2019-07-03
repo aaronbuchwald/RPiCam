@@ -185,9 +185,9 @@ void sig_timeout_handler(int signal) {
 }
 
 
-void camera::set_and_capture(int cam, std::string name) {
-    set_camera(cam);
-    capture(name);
+void set_and_capture(camera *cam, int cam, std::string name) {
+    cam.set_camera(cam);
+    cam.capture(name);
 
     last_success = 1;
 }
@@ -203,14 +203,14 @@ int cap_sequence_with_timeout() {
     // double time_difference = 0.0;
 
     for (int round = 1; round <= 6 ; round++) {
-        for (int cam = 1; cam <= 3; cam++) {
+        for (int camNum = 1; camNum <= 3; camNum++) {
             last_success = 0;
-            std::thread thread_capture(&cam.set_and_capture, cam, "dummy");
+            std::thread thread_capture(&cam, camNum, "dummy");
             thread_capture.detach();
             
             usleep(2000000);
             if (last_success != 1) {
-                cam -= 1;
+                camNum -= 1;
                 raise(SIGUSR1);
             } else {
                 // Pass through as this indicates that the last picture was taken successfully
@@ -223,6 +223,8 @@ int main() {
     //test_cameras();
     // need to initialize I2C first before usage, this should all be done in the constructor of the camera object
     capture_sequence();
+
+    return 1;
 }
 
 

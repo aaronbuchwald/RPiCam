@@ -20,7 +20,6 @@ class camera {
         camera();
         int set_camera(int);
         std::string capture(std::string name);
-        void set_and_capture(int cam, std::string name);
     private:
         int PIN7, PIN11, PIN12;
         IIC iviic;
