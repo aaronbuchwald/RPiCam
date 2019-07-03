@@ -108,8 +108,8 @@ std::string num_as_string(int num) {
 }
 
 // finds the difference between t1 and the current time and updates the time parameter to now
-double find_time(high_resolution_clock::time_point &t1) {
-    high_resolution_clock::time_point t2 = high_resolution_clock::now();
+double find_time(std::chrono::high_resolution_clock::time_point &t1) {
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 
     double time_span_seconds = std::chrono::duration_cast<duration<double> >(t2-t1).count();
     t1 = std::chrono::high_resolution_clock::now();
@@ -139,7 +139,7 @@ int capture_sequence() {
     // creates camera object
     camera cam;
 
-    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
     double time_difference = 0.0;
 
     // loops through the necessary 6 times to take pictures for OpNav
@@ -199,7 +199,7 @@ int cap_sequence_with_timeout() {
 
     camera cam;
 
-    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
     double time_difference = 0.0;
 
     for (int round = 1; round <= 6 ; round++) {
