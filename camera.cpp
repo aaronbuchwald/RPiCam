@@ -111,7 +111,7 @@ std::string num_as_string(int num) {
 double find_time(std::chrono::high_resolution_clock::time_point &t1) {
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 
-    double time_span_seconds = std::chrono::duration_cast<duration<double> >(t2-t1).count();
+    double time_span_seconds = std::chrono::duration_cast<std::chrono::duration<double> >(t2-t1).count();
     t1 = std::chrono::high_resolution_clock::now();
     return time_span_seconds;
 }
@@ -185,7 +185,7 @@ void sig_timeout_handler(int signal) {
 }
 
 
-std::string camera::set_and_capture(int cam, std::string name) {
+void camera::set_and_capture(int cam, std::string name) {
     set_camera(cam);
     capture(name);
 
@@ -199,8 +199,8 @@ int cap_sequence_with_timeout() {
 
     camera cam;
 
-    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-    double time_difference = 0.0;
+    // std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+    // double time_difference = 0.0;
 
     for (int round = 1; round <= 6 ; round++) {
         for (int cam = 1; cam <= 3; cam++) {
