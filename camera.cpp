@@ -185,15 +185,15 @@ void sig_timeout_handler(int signal) {
 }
 
 
-void set_and_capture(camera *cam, int cam, std::string name) {
-    cam.set_camera(cam);
+void set_and_capture(camera cam, int camNum, std::string name) {
+    cam.set_camera(camNum);
     cam.capture(name);
 
     last_success = 1;
 }
 
 
-int cap_sequence_with_timeout() {
+void cap_sequence_with_timeout() {
     // Creates the timeout handler
     std::signal(SIGUSR1, sig_timeout_handler);
 
@@ -205,7 +205,7 @@ int cap_sequence_with_timeout() {
     for (int round = 1; round <= 6 ; round++) {
         for (int camNum = 1; camNum <= 3; camNum++) {
             last_success = 0;
-            std::thread thread_capture(&cam, camNum, "dummy");
+            std::thread thread_capture(cam, camNum, "dummy");
             thread_capture.detach();
             
             usleep(2000000);
