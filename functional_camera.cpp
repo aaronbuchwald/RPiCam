@@ -1,33 +1,18 @@
-#include "camera.h"
+#include <string.h>
+#include <string>
+#include <wiringPi.h>
+#include <wiringPiI2C.h>
+#include <stdlib.h>
+#include <iostream>
+#include <cstring>
+#include <chrono>
+#include <csignal>
+#include <thread>
+#include <unistd.h>
 
 // using namespace std::chrono;
 namespace {
     volatile std::sig_atomic_t last_success = -1;
-}
-
-camera::camera() {
-    std::cout << "Initializing the camera..." << std::endl;
-
-    // wiringPi abstracts the physical pin numbers
-    // pin number counterparts documented here: https://hackage.haskell.org/package/wiringPi
-    // Assign the wiringPi pin numbers to the variables named for their physical pin numbering
-    
-    // sets up wiringPi must be called before using pins
-
-    iviic = IIC((0x70), (0x01));
-
-    wiringPiSetup();
-    
-    // makes sure to initialize these correctly as the wiringPi versions of the physical numbers
-    PIN7 = 7;
-    PIN11 = 0;
-    PIN12 = 1;
-
-
-    // sets the pins to output mode
-    pinMode(PIN7, OUTPUT);
-    pinMode(PIN11, OUTPUT);
-    pinMode(PIN12, OUTPUT);
 }
 
 // writes data to the register at (0x70) and sets wiringPi pins to designate the correct camera
