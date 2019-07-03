@@ -18,7 +18,7 @@ namespace {
 // writes data to the register at (0x70) and sets wiringPi pins to designate the correct camera
 // return cam number changed to on success
 // returns -1 for an illegal argument
-int set_camera(iic_address, int cam) {
+int set_camera(int iic_address, int cam) {
     int PIN7 = 7;
     int PIN11 = 0;
     int PIN12 = 1;
@@ -104,31 +104,13 @@ double find_time(std::chrono::high_resolution_clock::time_point &t1) {
     return time_span_seconds;
 }
 
-int test_cameras() {
-    camera cam;
-
-    set_camera(1);
-    capture("cam1.jpg");
-
-    set_camera(2);
-    capture("cam2.jpg");
-
-    set_camera(3);
-    capture("cam3.jpg");
-
-    set_camera(4);
-    capture("cam4.jpg");
-
-    return 0;
-}
-
 void sig_timeout_handler(int signal) {
     std::cout << "Camera timed out, trying again..." << std::endl;
 }
 
 
-void set_and_capture(camera cam, int camNum, std::string name) {
-    set_camera(camNum);
+void set_and_capture(int iic_address, int camNum, std::string name) {
+    set_camera(iic_address, camNum);
     capture(name);
 
     last_success = 1;
@@ -188,7 +170,7 @@ void cap_sequence_with_timeout() {
     for (int round = 1; round <= 6 ; round++) {
         for (int camNum = 1; camNum <= 3; camNum++) {
             last_success = 0;
-            std::thread thread_capture(&set_and_capture, camNum, "dummy");
+            std::thread thread_capture(&set_and_capture, iic_address, camNum, "dummy");
             thread_capture.detach();
             
             usleep(2000000);
