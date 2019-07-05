@@ -9,15 +9,19 @@
 #include <csignal>
 #include <thread>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <fstream>
 
 // using namespace std::chrono;
 namespace {
     volatile std::sig_atomic_t last_success = -1;
 }
 
-void foo() {
-    // Foo
+inline bool file_exists( const std::string& name) {
+        struct stat buffer;
+        return (stat (name.c_str(), &buffer) == 0);
 }
+
 
 // writes data to the register at (0x70) and sets wiringPi pins to designate the correct camera
 // return cam number changed to on success
