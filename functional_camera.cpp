@@ -77,6 +77,7 @@ std::string capture(std::string name) {
     cmd_char[command.size()] = '\0';
 
     system(cmd_char);
+    last_success = 1;
 
     return command;
 }
@@ -109,14 +110,18 @@ double find_time(std::chrono::high_resolution_clock::time_point &t1) {
 }
 
 void sig_timeout_handler(int signal) {
-    std::cout << "Camera timed out, trying again..." << std::endl;
+    if (last_success == 0) {
+	std::cout << "Camera timed out, trying again..." << std::endl;
+    } else {
+	last_success = 0;
+    }
 }
 
 
 void set_and_capture(int iic_address, int camNum, std::string name) {
     set_camera(iic_address, camNum);
     capture(name);
-
+    // TODO check if image exists
     last_success = 1;
 }
 
@@ -171,20 +176,22 @@ void cap_sequence_with_timeout() {
     // std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
     // double time_difference = 0.0;
 
-    for (int round = 1; round <= 6 ; round++) {
-        for (int camNum = 1; camNum <= 3; camNum++) {
+    for (int camNum = 1; camNum <= 3 ; camNum++) {
+	set_camera(iic_address, camNum);
+        for (int round = 1; round <= 6; round++) {
             last_success = 0;
-            std::thread thread_capture(&set_and_capture, iic_address, camNum, std::to_string(round) + "_" + std::to_string(camNum) + ".jpg");
+            std::thread thread_capture(&capture, std::to_string(round) + "_" + std::to_string(camNum) + ".jpg");
             thread_capture.detach();
             
-            usleep(2000000);
+            usleep(1500000);
             if (last_success != 1) {
-                camNum -= 1;
+		raise(SIGINT);
 		std::cout << "Fail" << std::endl;
-		std::cout << round << std::endl;
-		std::cout << camNum << std::endl;
-                raise(SIGINT);
+		std::cout << "Round: " << round << std::endl;
+		std::cout << "Camera Number: " << camNum << std::endl;
+		round -= 1;
             } else {
+		raise(SIGINT);
 		std::cout << "Success" << std::endl;
                 std::cout << round << std::endl;
                 std::cout << camNum << std::endl;
