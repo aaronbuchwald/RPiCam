@@ -1,5 +1,4 @@
 CC = g++
-SRC = GPIO.cpp
 CCFLAGS = -Wall -g -std=c++11
 
 all: init camera
@@ -17,6 +16,9 @@ camera: camera.o IIC.o
 
 func:
 	$(CC) $(CCFLAGS) -o func functional_camera.cpp -lwiringPi -lpthread
+
+green:
+	$(CC) $(CCFLAGS) -o green greencam.cpp -lwiringPi
 
 camera.o: camera.h IIC.h
 	$(CC) $(CCFLAGS) -c camera.cpp -lwiringPi
